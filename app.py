@@ -18,6 +18,7 @@ import base64
 import speech_recognition as sr
 import tempfile
 import io
+from audio_recorder_streamlit import audio_recorder
 
 # Page configuration
 st.set_page_config(
@@ -100,13 +101,84 @@ ui_translations = {
         "ask_questions": "Ask your farming questions",
         "type_question": "Type your farming question here...",
         "send": "📤 Send",
-        "voice_input": "🎤 Voice Input",
+        "voice_input": "🎤 Voice Input - Speak Directly",
+        "record_voice": "Click to record your question",
         "upload_audio": "Upload audio file (WAV format)",
         "process_voice": "🎤 Process Voice Input",
         "disease_detection": "🔍 Crop Disease Detection",
         "upload_image": "Upload crop image for disease analysis",
         "analyze": "Analyze Disease",
-        "logout": "Logout"
+        "logout": "Logout",
+        "weather_header": "🌦️ Weather Information",
+        "temperature": "🌡️ Temperature",
+        "humidity": "💧 Humidity",
+        "rainfall": "🌧️ Rainfall",
+        "wind_speed": "💨 Wind Speed",
+        "current_conditions": "Current Conditions",
+        "weather": "Weather",
+        "feels_like": "Feels like",
+        "farming_advisory": "🧑‍🌾 Farming Advisory",
+        "high_humidity": "⚠️ High humidity detected. Monitor crops for fungal diseases.",
+        "high_temp": "🌡️ High temperature. Ensure adequate irrigation.",
+        "good_rainfall": "🌧️ Good rainfall. Perfect for rice cultivation.",
+        "schemes_header": "📢 Government Schemes",
+        "available_schemes": "Available Schemes for Kerala",
+        "description": "Description",
+        "eligibility": "Eligibility",
+        "benefits": "Benefits",
+        "how_to_apply": "How to Apply",
+        "deadline": "Deadline",
+        "contact": "Contact",
+        "crop_advisory_header": "🌾 Crop Advisory System",
+        "select_season": "Select Current Season",
+        "select_soil": "Select Soil Type",
+        "get_recommendations": "Get Crop Recommendations",
+        "recommended_crops": "🌱 Recommended Crops",
+        "alternative_crops": "Alternative Crops",
+        "farming_tips": "🧑‍🌾 Farming Tips",
+        "news_header": "📰 Agriculture News Feed",
+        "source": "Source",
+        "read_more": "Read More",
+        "market_header": "📈 Market Prices",
+        "live_prices": "📊 Live Market Prices",
+        "last_updated": "Last Updated",
+        "market_insights": "💡 Market Insights",
+        "best_time_sell": "⏰ Best Time to Sell",
+        "select_crop": "Select Crop",
+        "best_months": "Best Months",
+        "reason": "Reason",
+        "advice": "Advice",
+        "login_header": "🔐 Login / Signup",
+        "login_tab": "Login",
+        "signup_tab": "Sign Up",
+        "login_to_account": "Login to Your Account",
+        "mobile_number": "Mobile Number",
+        "password": "Password",
+        "login_button": "Login",
+        "create_account": "Create New Account",
+        "full_name": "Full Name",
+        "location": "Location (Village, District, State)",
+        "confirm_password": "Confirm Password",
+        "signup_button": "Sign Up",
+        "calendar_header": "📅 My Farming Calendar",
+        "my_crops": "🌾 My Crops",
+        "add_new_crop": "🌱 Add New Crop",
+        "upcoming_tasks": "📋 Upcoming Tasks (Next 7 Days)",
+        "planting_date": "Planting Date",
+        "expected_harvest": "Expected Harvest",
+        "total_duration": "Total Duration",
+        "growth_stages": "Growth Stages",
+        "activities": "Activities",
+        "fertilizer_schedule": "Fertilizer Schedule",
+        "area_acres": "Area (in acres)",
+        "add_crop_button": "Add Crop",
+        "add_reminder": "➕ Add Custom Reminder",
+        "reminder_title": "Reminder Title",
+        "reminder_date": "Reminder Date",
+        "description_optional": "Description (optional)",
+        "add_reminder_button": "Add Reminder",
+        "affects": "Affects",
+        "market_label": "Market"
     },
     "Hindi": {
         "select_language": "🌐 भाषा चुनें",
@@ -123,13 +195,84 @@ ui_translations = {
         "ask_questions": "अपने कृषि संबंधी प्रश्न पूछें",
         "type_question": "यहाँ अपना प्रश्न लिखें...",
         "send": "📤 भेजें",
-        "voice_input": "🎤 वॉइस इनपुट",
+        "voice_input": "🎤 वॉइस इनपुट - सीधे बोलें",
+        "record_voice": "अपना सवाल रिकॉर्ड करने के लिए क्लिक करें",
         "upload_audio": "ऑडियो फ़ाइल अपलोड करें (WAV प्रारूप)",
         "process_voice": "🎤 वॉइस प्रोसेस करें",
         "disease_detection": "🔍 फसल रोग का पता लगाना",
         "upload_image": "रोग विश्लेषण के लिए फसल की तस्वीर अपलोड करें",
         "analyze": "विश्लेषण करें",
-        "logout": "लॉगआउट"
+        "logout": "लॉगआउट",
+        "weather_header": "🌦️ मौसम की जानकारी",
+        "temperature": "🌡️ तापमान",
+        "humidity": "💧 आर्द्रता",
+        "rainfall": "🌧️ वर्षा",
+        "wind_speed": "💨 हवा की गति",
+        "current_conditions": "वर्तमान स्थिति",
+        "weather": "मौसम",
+        "feels_like": "महसूस होता है",
+        "farming_advisory": "🧑‍🌾 कृषि सलाह",
+        "high_humidity": "⚠️ उच्च आर्द्रता का पता चला। फंगल रोगों के लिए फसलों की निगरानी करें।",
+        "high_temp": "🌡️ उच्च तापमान। पर्याप्त सिंचाई सुनिश्चित करें।",
+        "good_rainfall": "🌧️ अच्छी वर्षा। धान की खेती के लिए उपयुक्त।",
+        "schemes_header": "📢 सरकारी योजनाएं",
+        "available_schemes": "केरल के लिए उपलब्ध योजनाएं",
+        "description": "विवरण",
+        "eligibility": "पात्रता",
+        "benefits": "लाभ",
+        "how_to_apply": "आवेदन कैसे करें",
+        "deadline": "अंतिम तिथि",
+        "contact": "संपर्क",
+        "crop_advisory_header": "🌾 फसल सलाह प्रणाली",
+        "select_season": "वर्तमान मौसम चुनें",
+        "select_soil": "मिट्टी का प्रकार चुनें",
+        "get_recommendations": "फसल सिफारिशें प्राप्त करें",
+        "recommended_crops": "🌱 अनुशंसित फसलें",
+        "alternative_crops": "वैकल्पिक फसलें",
+        "farming_tips": "🧑‍🌾 कृषि युक्तियाँ",
+        "news_header": "📰 कृषि समाचार फ़ीड",
+        "source": "स्रोत",
+        "read_more": "और पढ़ें",
+        "market_header": "📈 बाजार मूल्य",
+        "live_prices": "📊 लाइव बाजार मूल्य",
+        "last_updated": "अंतिम अपडेट",
+        "market_insights": "💡 बाजार अंतर्दृष्टि",
+        "best_time_sell": "⏰ बेचने का सबसे अच्छा समय",
+        "select_crop": "फसल चुनें",
+        "best_months": "सबसे अच्छे महीने",
+        "reason": "कारण",
+        "advice": "सलाह",
+        "login_header": "🔐 लॉगिन / साइनअप",
+        "login_tab": "लॉगिन",
+        "signup_tab": "साइन अप",
+        "login_to_account": "अपने खाते में लॉगिन करें",
+        "mobile_number": "मोबाइल नंबर",
+        "password": "पासवर्ड",
+        "login_button": "लॉगिन",
+        "create_account": "नया खाता बनाएं",
+        "full_name": "पूरा नाम",
+        "location": "स्थान (गांव, जिला, राज्य)",
+        "confirm_password": "पासवर्ड की पुष्टि करें",
+        "signup_button": "साइन अप",
+        "calendar_header": "📅 मेरा कृषि कैलेंडर",
+        "my_crops": "🌾 मेरी फसलें",
+        "add_new_crop": "🌱 नई फसल जोड़ें",
+        "upcoming_tasks": "📋 आगामी कार्य (अगले 7 दिन)",
+        "planting_date": "रोपण तिथि",
+        "expected_harvest": "अपेक्षित फसल",
+        "total_duration": "कुल अवधि",
+        "growth_stages": "वृद्धि चरण",
+        "activities": "गतिविधियाँ",
+        "fertilizer_schedule": "उर्वरक अनुसूची",
+        "area_acres": "क्षेत्रफल (एकड़ में)",
+        "add_crop_button": "फसल जोड़ें",
+        "add_reminder": "➕ कस्टम रिमाइंडर जोड़ें",
+        "reminder_title": "रिमाइंडर शीर्षक",
+        "reminder_date": "रिमाइंडर तिथि",
+        "description_optional": "विवरण (वैकल्पिक)",
+        "add_reminder_button": "रिमाइंडर जोड़ें",
+        "affects": "प्रभावित करता है",
+        "market_label": "बाजार"
     },
     "Malayalam": {
         "select_language": "🌐 ഭാഷ തിരഞ്ഞെടുക്കുക",
@@ -146,13 +289,84 @@ ui_translations = {
         "ask_questions": "നിങ്ങളുടെ കൃഷി ചോദ്യങ്ങൾ ചോദിക്കുക",
         "type_question": "ഇവിടെ നിങ്ങളുടെ ചോദ്യം ടൈപ്പ് ചെയ്യുക...",
         "send": "📤 അയയ്ക്കുക",
-        "voice_input": "🎤 വോയ്സ് ഇൻപുട്ട്",
+        "voice_input": "🎤 വോയ്സ് ഇൻപുട്ട് - നേരിട്ട് സംസാരിക്കുക",
+        "record_voice": "നിങ്ങളുടെ ചോദ്യം റെക്കോർഡ് ചെയ്യാൻ ക്ലിക്ക് ചെയ്യുക",
         "upload_audio": "ഓഡിയോ ഫയൽ അപ്‌ലോഡ് ചെയ്യുക (WAV ഫോർമാറ്റ്)",
         "process_voice": "🎤 വോയ്സ് പ്രോസസ് ചെയ്യുക",
         "disease_detection": "🔍 വിള രോഗ കണ്ടെത്തൽ",
         "upload_image": "രോഗ വിശകലനത്തിനായി വിള ചിത്രം അപ്‌ലോഡ് ചെയ്യുക",
         "analyze": "വിശകലനം ചെയ്യുക",
-        "logout": "ലോഗൗട്ട്"
+        "logout": "ലോഗൗട്ട്",
+        "weather_header": "🌦️ കാലാവസ്ഥാ വിവരം",
+        "temperature": "🌡️ ഊഷ്മാവ്",
+        "humidity": "💧 ഈർപ്പം",
+        "rainfall": "🌧️ മഴ",
+        "wind_speed": "💨 കാറ്റിന്റെ വേഗത",
+        "current_conditions": "നിലവിലെ അവസ്ഥ",
+        "weather": "കാലാവസ്ഥ",
+        "feels_like": "അനുഭവപ്പെടുന്നത്",
+        "farming_advisory": "🧑‍🌾 കൃഷി ഉപദേശം",
+        "high_humidity": "⚠️ ഉയർന്ന ഈർപ്പം കണ്ടെത്തി. ഫംഗൽ രോഗങ്ങൾക്കായി വിളകൾ നിരീക്ഷിക്കുക.",
+        "high_temp": "🌡️ ഉയർന്ന താപനില. മതിയായ ജലസേചനം ഉറപ്പാക്കുക.",
+        "good_rainfall": "🌧️ നല്ല മഴ. നെല്ല് കൃഷിക്ക് അനുയോജ്യം.",
+        "schemes_header": "📢 സർക്കാർ പദ്ധതികൾ",
+        "available_schemes": "കേരളത്തിനായി ലഭ്യമായ പദ്ധതികൾ",
+        "description": "വിവരണം",
+        "eligibility": "യോഗ്യത",
+        "benefits": "ആനുകൂല്യങ്ങൾ",
+        "how_to_apply": "എങ്ങനെ അപേക്ഷിക്കാം",
+        "deadline": "അവസാന തീയതി",
+        "contact": "ബന്ധപ്പെടുക",
+        "crop_advisory_header": "🌾 വിള ഉപദേശ സംവിധാനം",
+        "select_season": "നിലവിലെ സീസൺ തിരഞ്ഞെടുക്കുക",
+        "select_soil": "മണ്ണിന്റെ തരം തിരഞ്ഞെടുക്കുക",
+        "get_recommendations": "വിള ശുപാർശകൾ നേടുക",
+        "recommended_crops": "🌱 ശുപാർശ ചെയ്ത വിളകൾ",
+        "alternative_crops": "ബദൽ വിളകൾ",
+        "farming_tips": "🧑‍🌾 കൃഷി നുറുങ്ങുകൾ",
+        "news_header": "📰 കാർഷിക വാർത്താ ഫീഡ്",
+        "source": "ഉറവിടം",
+        "read_more": "കൂടുതൽ വായിക്കുക",
+        "market_header": "📈 മാർക്കറ്റ് വിലകൾ",
+        "live_prices": "📊 തത്സമയ വിപണി വിലകൾ",
+        "last_updated": "അവസാനം അപ്ഡേറ്റ് ചെയ്തത്",
+        "market_insights": "💡 വിപണി സ്ഥിതിവിവരങ്ങൾ",
+        "best_time_sell": "⏰ വിൽക്കാനുള്ള മികച്ച സമയം",
+        "select_crop": "വിള തിരഞ്ഞെടുക്കുക",
+        "best_months": "മികച്ച മാസങ്ങൾ",
+        "reason": "കാരണം",
+        "advice": "ഉപദേശം",
+        "login_header": "🔐 ലോഗിൻ / സൈൻഅപ്പ്",
+        "login_tab": "ലോഗിൻ",
+        "signup_tab": "സൈൻ അപ്പ്",
+        "login_to_account": "നിങ്ങളുടെ അക്കൗണ്ടിലേക്ക് ലോഗിൻ ചെയ്യുക",
+        "mobile_number": "മൊബൈൽ നമ്പർ",
+        "password": "പാസ്‌വേഡ്",
+        "login_button": "ലോഗിൻ",
+        "create_account": "പുതിയ അക്കൗണ്ട് സൃഷ്ടിക്കുക",
+        "full_name": "പൂർണ്ണ നാമം",
+        "location": "സ്ഥലം (ഗ്രാമം, ജില്ല, സംസ്ഥാനം)",
+        "confirm_password": "പാസ്‌വേഡ് സ്ഥിരീകരിക്കുക",
+        "signup_button": "സൈൻ അപ്പ്",
+        "calendar_header": "📅 എന്റെ കാർഷിക കലണ്ടർ",
+        "my_crops": "🌾 എന്റെ വിളകൾ",
+        "add_new_crop": "🌱 പുതിയ വിള ചേർക്കുക",
+        "upcoming_tasks": "📋 വരാനിരിക്കുന്ന ചുമതലകൾ (അടുത്ത 7 ദിവസം)",
+        "planting_date": "നടീൽ തീയതി",
+        "expected_harvest": "പ്രതീക്ഷിക്കുന്ന വിളവെടുപ്പ്",
+        "total_duration": "മൊത്തം ദൈർഘ്യം",
+        "growth_stages": "വളർച്ചാ ഘട്ടങ്ങൾ",
+        "activities": "പ്രവർത്തനങ്ങൾ",
+        "fertilizer_schedule": "വളം ഷെഡ്യൂൾ",
+        "area_acres": "വിസ്തീർണ്ണം (ഏക്കറിൽ)",
+        "add_crop_button": "വിള ചേർക്കുക",
+        "add_reminder": "➕ കസ്റ്റം റിമൈൻഡർ ചേർക്കുക",
+        "reminder_title": "റിമൈൻഡർ ശീർഷകം",
+        "reminder_date": "റിമൈൻഡർ തീയതി",
+        "description_optional": "വിവരണം (ഓപ്ഷണൽ)",
+        "add_reminder_button": "റിമൈൻഡർ ചേർക്കുക",
+        "affects": "ബാധിക്കുന്നത്",
+        "market_label": "വിപണി"
     },
     "Marathi": {
         "select_language": "🌐 भाषा निवडा",
@@ -169,13 +383,84 @@ ui_translations = {
         "ask_questions": "तुमचे शेती प्रश्न विचारा",
         "type_question": "येथे तुमचा प्रश्न टाइप करा...",
         "send": "📤 पाठवा",
-        "voice_input": "🎤 व्हॉइस इनपुट",
+        "voice_input": "🎤 व्हॉइस इनपुट - थेट बोला",
+        "record_voice": "तुमचा प्रश्न रेकॉर्ड करण्यासाठी क्लिक करा",
         "upload_audio": "ऑडिओ फाइल अपलोड करा (WAV स्वरूप)",
         "process_voice": "🎤 व्हॉइस प्रोसेस करा",
         "disease_detection": "🔍 पीक रोग शोध",
         "upload_image": "रोग विश्लेषणासाठी पीक प्रतिमा अपलोड करा",
         "analyze": "विश्लेषण करा",
-        "logout": "लॉगआउट"
+        "logout": "लॉगआउट",
+        "weather_header": "🌦️ हवामान माहिती",
+        "temperature": "🌡️ तापमान",
+        "humidity": "💧 आर्द्रता",
+        "rainfall": "🌧️ पाऊस",
+        "wind_speed": "💨 वाऱ्याचा वेग",
+        "current_conditions": "सध्याची परिस्थिती",
+        "weather": "हवामान",
+        "feels_like": "जाणवते",
+        "farming_advisory": "🧑‍🌾 शेती सल्ला",
+        "high_humidity": "⚠️ उच्च आर्द्रता आढळली. बुरशीजन्य रोगांसाठी पिकांचे निरीक्षण करा.",
+        "high_temp": "🌡️ उच्च तापमान. पुरेसे सिंचन सुनिश्चित करा.",
+        "good_rainfall": "🌧️ चांगला पाऊस. तांदूळ लागवडीसाठी योग्य.",
+        "schemes_header": "📢 सरकारी योजना",
+        "available_schemes": "केरळसाठी उपलब्ध योजना",
+        "description": "वर्णन",
+        "eligibility": "पात्रता",
+        "benefits": "फायदे",
+        "how_to_apply": "अर्ज कसा करावा",
+        "deadline": "अंतिम तारीख",
+        "contact": "संपर्क",
+        "crop_advisory_header": "🌾 पीक सल्ला प्रणाली",
+        "select_season": "सध्याचा हंगाम निवडा",
+        "select_soil": "मातीचा प्रकार निवडा",
+        "get_recommendations": "पीक शिफारसी मिळवा",
+        "recommended_crops": "🌱 शिफारस केलेली पिके",
+        "alternative_crops": "पर्यायी पिके",
+        "farming_tips": "🧑‍🌾 शेती टिपा",
+        "news_header": "📰 कृषी बातम्या फीड",
+        "source": "स्रोत",
+        "read_more": "अधिक वाचा",
+        "market_header": "📈 बाजार किंमत",
+        "live_prices": "📊 थेट बाजार किंमत",
+        "last_updated": "शेवटचे अपडेट",
+        "market_insights": "💡 बाजार अंतर्दृष्टी",
+        "best_time_sell": "⏰ विक्रीसाठी सर्वोत्तम वेळ",
+        "select_crop": "पीक निवडा",
+        "best_months": "सर्वोत्तम महिने",
+        "reason": "कारण",
+        "advice": "सल्ला",
+        "login_header": "🔐 लॉगिन / साइनअप",
+        "login_tab": "लॉगिन",
+        "signup_tab": "साइन अप",
+        "login_to_account": "तुमच्या खात्यात लॉगिन करा",
+        "mobile_number": "मोबाइल नंबर",
+        "password": "पासवर्ड",
+        "login_button": "लॉगिन",
+        "create_account": "नवीन खाते तयार करा",
+        "full_name": "पूर्ण नाव",
+        "location": "स्थान (गाव, जिल्हा, राज्य)",
+        "confirm_password": "पासवर्ड पुष्टी करा",
+        "signup_button": "साइन अप",
+        "calendar_header": "📅 माझे शेती कॅलेंडर",
+        "my_crops": "🌾 माझी पिके",
+        "add_new_crop": "🌱 नवीन पीक जोडा",
+        "upcoming_tasks": "📋 आगामी कार्ये (पुढील 7 दिवस)",
+        "planting_date": "लागवड तारीख",
+        "expected_harvest": "अपेक्षित कापणी",
+        "total_duration": "एकूण कालावधी",
+        "growth_stages": "वाढीचे टप्पे",
+        "activities": "क्रियाकलाप",
+        "fertilizer_schedule": "खत वेळापत्रक",
+        "area_acres": "क्षेत्रफळ (एकरमध्ये)",
+        "add_crop_button": "पीक जोडा",
+        "add_reminder": "➕ सानुकूल रिमाइंडर जोडा",
+        "reminder_title": "रिमाइंडर शीर्षक",
+        "reminder_date": "रिमाइंडर तारीख",
+        "description_optional": "वर्णन (पर्यायी)",
+        "add_reminder_button": "रिमाइंडर जोडा",
+        "affects": "प्रभावित करते",
+        "market_label": "बाजार"
     }
 }
 
@@ -251,23 +536,29 @@ if st.session_state.current_section == "Ask AI":
     
     # Voice input section
     st.subheader(t["voice_input"])
-    audio_file = st.file_uploader(t["upload_audio"], type=['wav'], key="audio_upload")
+    st.caption(t["record_voice"])
+    audio_bytes = audio_recorder(
+        text="",
+        recording_color="#e74c3c",
+        neutral_color="#3498db",
+        icon_name="microphone",
+        icon_size="3x",
+    )
     
-    if audio_file is not None:
-        if st.button(t["process_voice"]):
-            with st.spinner("Processing voice input..."):
-                try:
-                    with tempfile.NamedTemporaryFile(delete=False, suffix='.wav') as tmp_file:
-                        tmp_file.write(audio_file.getvalue())
-                        tmp_file_path = tmp_file.name
-                    
-                    voice_text = process_voice_input(tmp_file_path, speech_lang_codes[st.session_state.language])
-                    st.session_state.voice_query = voice_text
-                    st.success(f"Recognized: {voice_text}")
-                    
-                    os.unlink(tmp_file_path)
-                except Exception as e:
-                    st.error(f"Error processing voice: {str(e)}")
+    if audio_bytes:
+        with st.spinner("Processing voice input..."):
+            try:
+                with tempfile.NamedTemporaryFile(delete=False, suffix='.wav') as tmp_file:
+                    tmp_file.write(audio_bytes)
+                    tmp_file_path = tmp_file.name
+                
+                voice_text = process_voice_input(tmp_file_path, speech_lang_codes[st.session_state.language])
+                st.session_state.voice_query = voice_text
+                st.success(f"Recognized: {voice_text}")
+                
+                os.unlink(tmp_file_path)
+            except Exception as e:
+                st.error(f"Error processing voice: {str(e)}")
     
     # Text input or use voice query
     user_query = st.text_input(
@@ -316,7 +607,7 @@ if st.session_state.current_section == "Ask AI":
                     st.error(f"Error analyzing image: {str(e)}")
 
 elif st.session_state.current_section == "Weather Info":
-    st.header("🌦️ Weather Information")
+    st.header(t["weather_header"])
     
     location = "Palakkad,Kerala,IN"
     
@@ -328,44 +619,44 @@ elif st.session_state.current_section == "Weather Info":
             
             with col1:
                 st.metric(
-                    label="🌡️ Temperature",
+                    label=t["temperature"],
                     value=f"{weather_data['temperature']}°C",
                     delta=None
                 )
             
             with col2:
                 st.metric(
-                    label="💧 Humidity",
+                    label=t["humidity"],
                     value=f"{weather_data['humidity']}%",
                     delta=None
                 )
             
             with col3:
                 st.metric(
-                    label="🌧️ Rainfall",
+                    label=t["rainfall"],
                     value=f"{weather_data.get('rainfall', 0)} mm",
                     delta=None
                 )
             
             with col4:
                 st.metric(
-                    label="💨 Wind Speed",
+                    label=t["wind_speed"],
                     value=f"{weather_data.get('wind_speed', 0)} km/h",
                     delta=None
                 )
             
-            st.subheader("Current Conditions")
-            st.write(f"**Weather:** {weather_data['description']}")
-            st.write(f"**Feels like:** {weather_data.get('feels_like', weather_data['temperature'])}°C")
+            st.subheader(t["current_conditions"])
+            st.write(f"**{t['weather']}:** {weather_data['description']}")
+            st.write(f"**{t['feels_like']}:** {weather_data.get('feels_like', weather_data['temperature'])}°C")
             
             # Weather advisory
-            st.subheader("🧑‍🌾 Farming Advisory")
+            st.subheader(t["farming_advisory"])
             if weather_data['humidity'] > 80:
-                st.warning("⚠️ High humidity detected. Monitor crops for fungal diseases.")
+                st.warning(t["high_humidity"])
             if weather_data['temperature'] > 35:
-                st.warning("🌡️ High temperature. Ensure adequate irrigation.")
+                st.warning(t["high_temp"])
             if weather_data.get('rainfall', 0) > 10:
-                st.info("🌧️ Good rainfall. Perfect for rice cultivation.")
+                st.info(t["good_rainfall"])
         else:
             st.error("Unable to fetch weather data. Please check your internet connection.")
             
@@ -373,7 +664,7 @@ elif st.session_state.current_section == "Weather Info":
         st.error(f"Error fetching weather data: {str(e)}")
 
 elif st.session_state.current_section == "Schemes":
-    st.header("📢 Government Schemes")
+    st.header(t["schemes_header"])
     
     try:
         with open('schemes.json', 'r', encoding='utf-8') as f:
@@ -383,20 +674,20 @@ elif st.session_state.current_section == "Schemes":
         kerala_schemes = [scheme for scheme in schemes_data['schemes'] 
                          if 'Kerala' in scheme.get('applicable_states', []) or 'All States' in scheme.get('applicable_states', [])]
         
-        st.subheader(f"Available Schemes for Kerala ({len(kerala_schemes)} schemes)")
+        st.subheader(f"{t['available_schemes']} ({len(kerala_schemes)} schemes)")
         
         for scheme in kerala_schemes:
             with st.expander(f"🎯 {scheme['title']}"):
-                st.write(f"**Description:** {scheme['description']}")
-                st.write(f"**Eligibility:** {scheme['eligibility']}")
-                st.write(f"**Benefits:** {scheme['benefits']}")
-                st.write(f"**How to Apply:** {scheme['how_to_apply']}")
+                st.write(f"**{t['description']}:** {scheme['description']}")
+                st.write(f"**{t['eligibility']}:** {scheme['eligibility']}")
+                st.write(f"**{t['benefits']}:** {scheme['benefits']}")
+                st.write(f"**{t['how_to_apply']}:** {scheme['how_to_apply']}")
                 
                 if scheme.get('deadline'):
-                    st.write(f"**Deadline:** {scheme['deadline']}")
+                    st.write(f"**{t['deadline']}:** {scheme['deadline']}")
                 
                 if scheme.get('contact_info'):
-                    st.write(f"**Contact:** {scheme['contact_info']}")
+                    st.write(f"**{t['contact']}:** {scheme['contact_info']}")
     
     except FileNotFoundError:
         st.error("Schemes database not found. Please contact administrator.")
@@ -404,42 +695,42 @@ elif st.session_state.current_section == "Schemes":
         st.error(f"Error loading schemes: {str(e)}")
 
 elif st.session_state.current_section == "Crop Advisory":
-    st.header("🌾 Crop Advisory System")
+    st.header(t["crop_advisory_header"])
     
     col1, col2 = st.columns(2)
     
     with col1:
         season = st.selectbox(
-            "Select Current Season",
+            t["select_season"],
             ["Kharif (Monsoon)", "Rabi (Winter)", "Zaid (Summer)"]
         )
     
     with col2:
         soil_type = st.selectbox(
-            "Select Soil Type",
+            t["select_soil"],
             ["Loamy", "Clay", "Sandy", "Red Soil", "Black Soil", "Alluvial"]
         )
     
-    if st.button("Get Crop Recommendations"):
+    if st.button(t["get_recommendations"]):
         recommendations = get_crop_recommendation(season, soil_type, "Kerala")
         
-        st.subheader("🌱 Recommended Crops")
+        st.subheader(t["recommended_crops"])
         
         for crop in recommendations['primary_crops']:
             st.success(f"🌾 **{crop['name']}** - {crop['reason']}")
         
         if recommendations['secondary_crops']:
-            st.subheader("Alternative Crops")
+            st.subheader(t["alternative_crops"])
             for crop in recommendations['secondary_crops']:
                 st.info(f"🌿 **{crop['name']}** - {crop['reason']}")
         
         # Additional tips
-        st.subheader("🧑‍🌾 Farming Tips")
+        st.subheader(t["farming_tips"])
         for tip in recommendations['tips']:
             st.write(f"• {tip}")
 
 elif st.session_state.current_section == "News Feed":
-    st.header("📰 Agriculture News Feed")
+    st.header(t["news_header"])
     
     try:
         news_items = get_agriculture_news()
@@ -452,10 +743,10 @@ elif st.session_state.current_section == "News Feed":
                     
                     col1, col2 = st.columns([3, 1])
                     with col1:
-                        st.write(f"**Source:** {news['source']}")
+                        st.write(f"**{t['source']}:** {news['source']}")
                     with col2:
                         if news.get('url'):
-                            st.markdown(f"[Read More]({news['url']})")
+                            st.markdown(f"[{t['read_more']}]({news['url']})")
                     
                     st.divider()
         else:
@@ -465,16 +756,16 @@ elif st.session_state.current_section == "News Feed":
         st.error(f"Error loading news: {str(e)}")
 
 elif st.session_state.current_section == "Login":
-    st.header("🔐 Login / Signup")
+    st.header(t["login_header"])
     
-    tab1, tab2 = st.tabs(["Login", "Sign Up"])
+    tab1, tab2 = st.tabs([t["login_tab"], t["signup_tab"]])
     
     with tab1:
-        st.subheader("Login to Your Account")
-        mobile = st.text_input("Mobile Number", key="login_mobile", max_chars=10)
-        password = st.text_input("Password", type="password", key="login_password")
+        st.subheader(t["login_to_account"])
+        mobile = st.text_input(t["mobile_number"], key="login_mobile", max_chars=10)
+        password = st.text_input(t["password"], type="password", key="login_password")
         
-        if st.button("Login"):
+        if st.button(t["login_button"]):
             if mobile and password:
                 success, result = login_user(mobile, password)
                 if success:
@@ -490,14 +781,14 @@ elif st.session_state.current_section == "Login":
                 st.warning("Please enter mobile number and password")
     
     with tab2:
-        st.subheader("Create New Account")
-        name = st.text_input("Full Name", key="signup_name")
-        location = st.text_input("Location (Village, District, State)", key="signup_location")
-        mobile_signup = st.text_input("Mobile Number", key="signup_mobile", max_chars=10)
-        password_signup = st.text_input("Password", type="password", key="signup_password")
-        confirm_password = st.text_input("Confirm Password", type="password", key="signup_confirm")
+        st.subheader(t["create_account"])
+        name = st.text_input(t["full_name"], key="signup_name")
+        location = st.text_input(t["location"], key="signup_location")
+        mobile_signup = st.text_input(t["mobile_number"], key="signup_mobile", max_chars=10)
+        password_signup = st.text_input(t["password"], type="password", key="signup_password")
+        confirm_password = st.text_input(t["confirm_password"], type="password", key="signup_confirm")
         
-        if st.button("Sign Up"):
+        if st.button(t["signup_button"]):
             if name and location and mobile_signup and password_signup:
                 if password_signup == confirm_password:
                     success, message = register_user(name, location, mobile_signup, password_signup)
@@ -511,13 +802,13 @@ elif st.session_state.current_section == "Login":
                 st.warning("Please fill all fields")
 
 elif st.session_state.current_section == "Market Prices":
-    st.header("📈 Market Prices")
+    st.header(t["market_header"])
     
     try:
         market_data = get_market_prices("Kerala")
         
-        st.subheader(f"📊 Live Market Prices - {market_data['state']}")
-        st.caption(f"Last Updated: {market_data['last_updated']}")
+        st.subheader(f"{t['live_prices']} - {market_data['state']}")
+        st.caption(f"{t['last_updated']}: {market_data['last_updated']}")
         
         # Display prices in cards
         cols = st.columns(3)
@@ -530,30 +821,30 @@ elif st.session_state.current_section == "Market Prices":
                     value=f"₹{crop_data['modal_price']} / {crop_data['unit']}",
                     delta=crop_data['change']
                 )
-                st.caption(f"Market: {crop_data['market']}")
+                st.caption(f"{t['market_label']}: {crop_data['market']}")
         
         st.divider()
         
         # Market Insights
-        st.subheader("💡 Market Insights")
+        st.subheader(t["market_insights"])
         insights = get_market_insights("Kerala")
         
         for insight in insights:
             impact_color = "green" if insight['impact'] == 'positive' else ("red" if insight['impact'] == 'negative' else "blue")
             st.markdown(f"**{insight['title']}**")
             st.markdown(f"<p style='color: {impact_color};'>{insight['description']}</p>", unsafe_allow_html=True)
-            st.caption(f"Affects: {', '.join(insight['crops'])}")
+            st.caption(f"{t['affects']}: {', '.join(insight['crops'])}")
             st.divider()
         
         # Best Selling Time
-        st.subheader("⏰ Best Time to Sell")
-        selected_crop = st.selectbox("Select Crop", list(market_data['prices'].keys()))
+        st.subheader(t["best_time_sell"])
+        selected_crop = st.selectbox(t["select_crop"], list(market_data['prices'].keys()))
         
         if selected_crop:
             selling_advice = get_best_selling_time(selected_crop)
-            st.info(f"**Best Months:** {selling_advice['best_months']}")
-            st.write(f"**Reason:** {selling_advice['reason']}")
-            st.success(f"**Advice:** {selling_advice['advice']}")
+            st.info(f"**{t['best_months']}:** {selling_advice['best_months']}")
+            st.write(f"**{t['reason']}:** {selling_advice['reason']}")
+            st.success(f"**{t['advice']}:** {selling_advice['advice']}")
             
     except Exception as e:
         st.error(f"Error loading market prices: {str(e)}")
@@ -563,13 +854,13 @@ elif st.session_state.current_section == "Farming Calendar":
         st.warning("Please login to access your farming calendar")
         st.stop()
     
-    st.header("📅 My Farming Calendar")
+    st.header(t["calendar_header"])
     
     # Tabs for different features
-    tab1, tab2, tab3 = st.tabs(["My Crops", "Add New Crop", "Upcoming Tasks"])
+    tab1, tab2, tab3 = st.tabs([t["my_crops"], t["add_new_crop"], t["upcoming_tasks"]])
     
     with tab1:
-        st.subheader("🌾 My Crops")
+        st.subheader(t["my_crops"])
         user_crops = st.session_state.user_data.get('crops', [])
         
         if user_crops:
@@ -577,34 +868,34 @@ elif st.session_state.current_section == "Farming Calendar":
                 with st.expander(f"🌱 {crop['name']} - {crop['area_acres']} acres"):
                     calendar = get_crop_calendar(crop['name'], crop['planting_date'])
                     
-                    st.write(f"**Planting Date:** {crop['planting_date']}")
-                    st.write(f"**Expected Harvest:** {calendar['harvest_date']}")
-                    st.write(f"**Total Duration:** {calendar['total_duration']} days")
+                    st.write(f"**{t['planting_date']}:** {crop['planting_date']}")
+                    st.write(f"**{t['expected_harvest']}:** {calendar['harvest_date']}")
+                    st.write(f"**{t['total_duration']}:** {calendar['total_duration']} days")
                     
-                    st.subheader("Growth Stages")
+                    st.subheader(t["growth_stages"])
                     for stage in calendar['timeline']:
                         st.write(f"**{stage['stage']}** ({stage['start_date']} to {stage['end_date']})")
-                        st.write(f"Activities: {', '.join(stage['activities'])}")
+                        st.write(f"{t['activities']}: {', '.join(stage['activities'])}")
                         st.divider()
                     
-                    st.subheader("Fertilizer Schedule")
+                    st.subheader(t["fertilizer_schedule"])
                     for fert in calendar['fertilizer_schedule']:
                         st.info(f"**{fert['date']}** - {fert['fertilizer']} ({fert['stage']})")
         else:
             st.info("No crops added yet. Add your first crop in the 'Add New Crop' tab!")
     
     with tab2:
-        st.subheader("🌱 Add New Crop")
+        st.subheader(t["add_new_crop"])
         
         crop_name = st.selectbox(
-            "Select Crop",
+            t["select_crop"],
             ["Rice (Paddy)", "Coconut", "Pepper", "Banana", "Cardamom", "Ginger", "Turmeric"]
         )
         
-        planting_date = st.date_input("Planting Date", value=datetime.now())
-        area_acres = st.number_input("Area (in acres)", min_value=0.1, max_value=100.0, value=1.0, step=0.5)
+        planting_date = st.date_input(t["planting_date"], value=datetime.now())
+        area_acres = st.number_input(t["area_acres"], min_value=0.1, max_value=100.0, value=1.0, step=0.5)
         
-        if st.button("Add Crop"):
+        if st.button(t["add_crop_button"]):
             success = add_crop_to_user(
                 st.session_state.user_mobile,
                 crop_name,
@@ -619,7 +910,7 @@ elif st.session_state.current_section == "Farming Calendar":
                 st.error("Failed to add crop")
     
     with tab3:
-        st.subheader("📋 Upcoming Tasks (Next 7 Days)")
+        st.subheader(t["upcoming_tasks"])
         
         upcoming = get_upcoming_tasks(st.session_state.user_mobile, days=7)
         
@@ -641,12 +932,12 @@ elif st.session_state.current_section == "Farming Calendar":
             st.info("No upcoming tasks in the next 7 days")
         
         # Add custom reminder
-        st.subheader("➕ Add Custom Reminder")
-        reminder_title = st.text_input("Reminder Title")
-        reminder_date = st.date_input("Reminder Date")
-        reminder_desc = st.text_area("Description (optional)")
+        st.subheader(t["add_reminder"])
+        reminder_title = st.text_input(t["reminder_title"])
+        reminder_date = st.date_input(t["reminder_date"])
+        reminder_desc = st.text_area(t["description_optional"])
         
-        if st.button("Add Reminder"):
+        if st.button(t["add_reminder_button"]):
             if reminder_title:
                 success = add_reminder(
                     st.session_state.user_mobile,
