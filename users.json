@@ -1,0 +1,26 @@
+{
+  "9876543210": {
+    "name": "Test Farmer",
+    "location": "Palakkad, Kerala",
+    "mobile": "9876543210",
+    "password": "ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae",
+    "registered_at": "2025-10-08T14:38:28.681437",
+    "crops": [
+      {
+        "name": "Rice (Paddy)",
+        "planting_date": "2025-10-08",
+        "area_acres": 2.0,
+        "added_at": "2025-10-08T14:40:41.234209"
+      }
+    ],
+    "reminders": [
+      {
+        "id": 1,
+        "created_at": "2025-10-08T14:42:35.553778",
+        "title": "Check irrigation system",
+        "date": "2025-10-09",
+        "description": "Inspect and clean"
+      }
+    ]
+  }
+}
