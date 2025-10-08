@@ -7,6 +7,9 @@ from utils.news_helper import get_agriculture_news
 import json
 from datetime import datetime
 import base64
+import speech_recognition as sr
+import tempfile
+import io
 
 # Page configuration
 st.set_page_config(
@@ -25,6 +28,25 @@ if 'chat_history' not in st.session_state:
 
 if 'language' not in st.session_state:
     st.session_state.language = "English"
+
+if 'voice_query' not in st.session_state:
+    st.session_state.voice_query = ""
+
+def process_voice_input(audio_file, language_code):
+    """Process voice input and convert to text"""
+    recognizer = sr.Recognizer()
+    
+    try:
+        with sr.AudioFile(audio_file) as source:
+            audio_data = recognizer.record(source)
+            text = recognizer.recognize_google(audio_data, language=language_code)
+            return text
+    except sr.UnknownValueError:
+        return "Could not understand audio"
+    except sr.RequestError as e:
+        return f"Could not request results; {e}"
+    except Exception as e:
+        return f"Error: {str(e)}"
 
 # Header
 st.markdown("""
@@ -66,29 +88,54 @@ if st.session_state.current_section == "Ask AI":
             st.markdown(f"**Krishi Mitra:** {chat['answer']}")
             st.divider()
     
-    # Input methods
-    col1, col2, col3 = st.columns([3, 1, 1])
+    # Language code mapping for speech recognition
+    speech_lang_codes = {
+        "English": "en-IN",
+        "Malayalam": "ml-IN",
+        "Hindi": "hi-IN",
+        "Marathi": "mr-IN"
+    }
     
-    with col1:
-        user_query = st.text_input("Type your farming question here...", key="chat_input")
+    # Voice input section
+    st.subheader("🎤 Voice Input")
+    audio_file = st.file_uploader("Upload audio file (WAV format)", type=['wav'], key="audio_upload")
     
-    with col2:
-        if st.button("🎤 Voice Input"):
-            st.info("Voice input feature will be available soon!")
+    if audio_file is not None:
+        if st.button("🎤 Process Voice Input"):
+            with st.spinner("Processing voice input..."):
+                try:
+                    with tempfile.NamedTemporaryFile(delete=False, suffix='.wav') as tmp_file:
+                        tmp_file.write(audio_file.getvalue())
+                        tmp_file_path = tmp_file.name
+                    
+                    voice_text = process_voice_input(tmp_file_path, speech_lang_codes[st.session_state.language])
+                    st.session_state.voice_query = voice_text
+                    st.success(f"Recognized: {voice_text}")
+                    
+                    os.unlink(tmp_file_path)
+                except Exception as e:
+                    st.error(f"Error processing voice: {str(e)}")
     
-    with col3:
-        if st.button("📤 Send"):
-            if user_query:
-                with st.spinner("Getting AI response..."):
-                    try:
-                        response = ask_gemini(user_query, languages[st.session_state.language])
-                        st.session_state.chat_history.append({
-                            "question": user_query,
-                            "answer": response
-                        })
-                        st.rerun()
-                    except Exception as e:
-                        st.error(f"Error getting AI response: {str(e)}")
+    # Text input or use voice query
+    user_query = st.text_input(
+        "Type your farming question here...", 
+        value=st.session_state.voice_query,
+        key="chat_input"
+    )
+    
+    if st.button("📤 Send"):
+        if user_query:
+            with st.spinner("Getting AI response..."):
+                try:
+                    response = ask_gemini(user_query, languages[st.session_state.language])
+                    st.session_state.chat_history.append({
+                        "question": user_query,
+                        "answer": response
+                    })
+                    st.session_state.voice_query = ""
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"Error getting AI response: {str(e)}")
     
     # Image upload for disease detection
     st.subheader("🔍 Crop Disease Detection")

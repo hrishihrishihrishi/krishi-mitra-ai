@@ -1,9 +1,10 @@
-modules = ["python-3.11"]
+modules = ["python-3.11", "python3"]
 [agent]
 integrations = ["python_gemini:1.0.0"]
 
 [nix]
 channel = "stable-25_05"
+packages = ["portaudio"]
 
 [deployment]
 deploymentTarget = "autoscale"
@@ -36,7 +37,3 @@ outputType = "webview"
 [[ports]]
 localPort = 5000
 externalPort = 80
-
-[[ports]]
-localPort = 44519
-externalPort = 3001
