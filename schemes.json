@@ -1,0 +1,114 @@
+{
+  "schemes": [
+    {
+      "id": 1,
+      "title": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+      "description": "Comprehensive crop insurance scheme providing financial support to farmers suffering crop loss/damage arising out of unforeseen events.",
+      "eligibility": "All farmers including sharecroppers and tenant farmers growing notified crops",
+      "benefits": "Up to Rs. 2 lakh per farmer per season. Premium rates: Kharif - 2%, Rabi - 1.5%, Horticultural crops - 5%",
+      "how_to_apply": "Apply through Common Service Centers, banks, or online portal within cut-off dates",
+      "applicable_states": ["All States"],
+      "deadline": "Cut-off dates vary by season and state",
+      "contact_info": "Toll-free: 14447, Email: pmfby-dac@gov.in"
+    },
+    {
+      "id": 2,
+      "title": "Kerala State Horticultural Mission",
+      "description": "Promoting horticultural development in Kerala through various subsidy schemes and technical support",
+      "eligibility": "Small and marginal farmers, SHG members, and entrepreneurs in Kerala",
+      "benefits": "50-75% subsidy for horticultural activities, equipment, and infrastructure development",
+      "how_to_apply": "Apply through District Collectors office or online portal",
+      "applicable_states": ["Kerala"],
+      "deadline": "Applications accepted year-round",
+      "contact_info": "Kerala State Horticultural Mission, Thiruvananthapuram"
+    },
+    {
+      "id": 3,
+      "title": "Kisan Credit Card (KCC)",
+      "description": "Credit facility for farmers to meet their agricultural and ancillary activities",
+      "eligibility": "All farmers including tenant farmers, oral lessees, and sharecroppers",
+      "benefits": "Credit up to Rs. 3 lakh at 4% interest rate with 3% interest subvention",
+      "how_to_apply": "Apply at any cooperative bank, RRB, or commercial bank",
+      "applicable_states": ["All States"],
+      "deadline": "No specific deadline - ongoing scheme",
+      "contact_info": "Contact nearest bank branch or call 1800-180-1551"
+    },
+    {
+      "id": 4,
+      "title": "PM-KISAN Samman Nidhi Yojana",
+      "description": "Direct income support of Rs. 6000 per year to eligible farmer families",
+      "eligibility": "Small and marginal farmer families having cultivable land up to 2 hectares",
+      "benefits": "Rs. 2000 per installment, three times a year directly to bank account",
+      "how_to_apply": "Online registration at pmkisan.gov.in or through Common Service Centers",
+      "applicable_states": ["All States"],
+      "deadline": "Ongoing registration",
+      "contact_info": "PM-KISAN Helpline: 155261, pmkisan-ict@gov.in"
+    },
+    {
+      "id": 5,
+      "title": "Kerala Coconut Development Board Scheme",
+      "description": "Support for coconut cultivation, processing, and marketing in Kerala",
+      "eligibility": "Coconut farmers and groups in Kerala",
+      "benefits": "Subsidies for planting, farm mechanization, processing units setup",
+      "how_to_apply": "Through District Coconut Development Boards",
+      "applicable_states": ["Kerala"],
+      "deadline": "Applications accepted throughout the year",
+      "contact_info": "Coconut Development Board, Kochi"
+    },
+    {
+      "id": 6,
+      "title": "National Mission on Sustainable Agriculture (NMSA)",
+      "description": "Enhancing agricultural productivity through climate resilient practices",
+      "eligibility": "All categories of farmers with focus on small and marginal farmers",
+      "benefits": "Support for climate resilient technologies, soil health management, water conservation",
+      "how_to_apply": "Through State Agriculture Departments and implementing agencies",
+      "applicable_states": ["All States"],
+      "deadline": "Varies by component and state",
+      "contact_info": "Department of Agriculture and Cooperation"
+    },
+    {
+      "id": 7,
+      "title": "Kerala Spices Development Programme",
+      "description": "Promoting spice cultivation and value addition in Kerala",
+      "eligibility": "Spice farmers, farmer groups, and processing units in Kerala",
+      "benefits": "50-75% subsidy for spice cultivation, processing equipment, and organic certification",
+      "how_to_apply": "Through Kerala Spice Board and District Agriculture Offices",
+      "applicable_states": ["Kerala"],
+      "deadline": "March 31 each year",
+      "contact_info": "Spices Board, Kochi - 0484-2333610"
+    },
+    {
+      "id": 8,
+      "title": "Soil Health Card Scheme",
+      "description": "Providing soil health cards to farmers with recommendations for nutrient management",
+      "eligibility": "All farmers in the country",
+      "benefits": "Free soil testing and customized fertilizer recommendations",
+      "how_to_apply": "Contact Village Level Worker or nearest Agriculture Office",
+      "applicable_states": ["All States"],
+      "deadline": "Ongoing scheme",
+      "contact_info": "State Agriculture Departments"
+    },
+    {
+      "id": 9,
+      "title": "Kerala Bamboo Mission",
+      "description": "Promoting bamboo cultivation and bamboo-based enterprises in Kerala",
+      "eligibility": "Farmers, SHGs, and entrepreneurs in Kerala",
+      "benefits": "90% subsidy for bamboo plantation, 50% for processing units",
+      "how_to_apply": "Through Kerala Bamboo Corporation and Forest Department",
+      "applicable_states": ["Kerala"],
+      "deadline": "September 30 each year",
+      "contact_info": "Kerala State Bamboo Corporation Ltd."
+    },
+    {
+      "id": 10,
+      "title": "National Horticulture Mission",
+      "description": "Holistic development of horticulture sector covering fruits, vegetables, root & tuber crops, mushrooms, spices, flowers, aromatic plants, coconut and cashew",
+      "eligibility": "Individual farmers, groups of farmers, SHGs, FPOs",
+      "benefits": "Area expansion, productivity enhancement, post harvest management, marketing support",
+      "how_to_apply": "Through State Horticulture Departments and implementing agencies",
+      "applicable_states": ["All States"],
+      "deadline": "Varies by component",
+      "contact_info": "National Horticulture Board - 0124-2355068"
+    }
+  ]
+}
