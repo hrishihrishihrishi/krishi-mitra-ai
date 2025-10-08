@@ -60,26 +60,120 @@ st.markdown("""
 
 # Language selector
 languages = {"English": "en", "Malayalam": "ml", "Hindi": "hi", "Marathi": "mr"}
-st.session_state.language = st.selectbox(
-    "🌐 Select Language / भाषा चुनें / ഭാഷ തിരഞ്ഞെടുക്കുക / भाषा निवडा",
+
+# UI translations
+ui_translations = {
+    "English": {
+        "select_language": "🌐 Select Language",
+        "navigation": "Navigation",
+        "ask_ai": "💬 Ask AI",
+        "weather_info": "🌦️ Weather Info",
+        "schemes": "📢 Schemes",
+        "crop_advisory": "🌾 Crop Advisory",
+        "news_feed": "📰 News Feed",
+        "farming_assistant": "AI Farming Assistant",
+        "ask_questions": "Ask your farming questions",
+        "type_question": "Type your farming question here...",
+        "send": "📤 Send",
+        "voice_input": "🎤 Voice Input",
+        "upload_audio": "Upload audio file (WAV format)",
+        "process_voice": "🎤 Process Voice Input",
+        "disease_detection": "🔍 Crop Disease Detection",
+        "upload_image": "Upload crop image for disease analysis",
+        "analyze": "Analyze Disease"
+    },
+    "Hindi": {
+        "select_language": "🌐 भाषा चुनें",
+        "navigation": "नेविगेशन",
+        "ask_ai": "💬 AI से पूछें",
+        "weather_info": "🌦️ मौसम की जानकारी",
+        "schemes": "📢 योजनाएं",
+        "crop_advisory": "🌾 फसल सलाह",
+        "news_feed": "📰 समाचार",
+        "farming_assistant": "कृषि सहायक AI",
+        "ask_questions": "अपने कृषि संबंधी प्रश्न पूछें",
+        "type_question": "यहाँ अपना प्रश्न लिखें...",
+        "send": "📤 भेजें",
+        "voice_input": "🎤 वॉइस इनपुट",
+        "upload_audio": "ऑडियो फ़ाइल अपलोड करें (WAV प्रारूप)",
+        "process_voice": "🎤 वॉइस प्रोसेस करें",
+        "disease_detection": "🔍 फसल रोग का पता लगाना",
+        "upload_image": "रोग विश्लेषण के लिए फसल की तस्वीर अपलोड करें",
+        "analyze": "विश्लेषण करें"
+    },
+    "Malayalam": {
+        "select_language": "🌐 ഭാഷ തിരഞ്ഞെടുക്കുക",
+        "navigation": "നാവിഗേഷൻ",
+        "ask_ai": "💬 AI യോട് ചോദിക്കുക",
+        "weather_info": "🌦️ കാലാവസ്ഥാ വിവരം",
+        "schemes": "📢 പദ്ധതികൾ",
+        "crop_advisory": "🌾 വിള ഉപദേശം",
+        "news_feed": "📰 വാർത്തകൾ",
+        "farming_assistant": "കൃഷി സഹായി AI",
+        "ask_questions": "നിങ്ങളുടെ കൃഷി ചോദ്യങ്ങൾ ചോദിക്കുക",
+        "type_question": "ഇവിടെ നിങ്ങളുടെ ചോദ്യം ടൈപ്പ് ചെയ്യുക...",
+        "send": "📤 അയയ്ക്കുക",
+        "voice_input": "🎤 വോയ്സ് ഇൻപുട്ട്",
+        "upload_audio": "ഓഡിയോ ഫയൽ അപ്‌ലോഡ് ചെയ്യുക (WAV ഫോർമാറ്റ്)",
+        "process_voice": "🎤 വോയ്സ് പ്രോസസ് ചെയ്യുക",
+        "disease_detection": "🔍 വിള രോഗ കണ്ടെത്തൽ",
+        "upload_image": "രോഗ വിശകലനത്തിനായി വിള ചിത്രം അപ്‌ലോഡ് ചെയ്യുക",
+        "analyze": "വിശകലനം ചെയ്യുക"
+    },
+    "Marathi": {
+        "select_language": "🌐 भाषा निवडा",
+        "navigation": "नेव्हिगेशन",
+        "ask_ai": "💬 AI ला विचारा",
+        "weather_info": "🌦️ हवामान माहिती",
+        "schemes": "📢 योजना",
+        "crop_advisory": "🌾 पीक सल्ला",
+        "news_feed": "📰 बातम्या",
+        "farming_assistant": "शेती सहाय्यक AI",
+        "ask_questions": "तुमचे शेती प्रश्न विचारा",
+        "type_question": "येथे तुमचा प्रश्न टाइप करा...",
+        "send": "📤 पाठवा",
+        "voice_input": "🎤 व्हॉइस इनपुट",
+        "upload_audio": "ऑडिओ फाइल अपलोड करा (WAV स्वरूप)",
+        "process_voice": "🎤 व्हॉइस प्रोसेस करा",
+        "disease_detection": "🔍 पीक रोग शोध",
+        "upload_image": "रोग विश्लेषणासाठी पीक प्रतिमा अपलोड करा",
+        "analyze": "विश्लेषण करा"
+    }
+}
+
+current_lang = st.selectbox(
+    ui_translations[st.session_state.language]["select_language"] + " / Select Language / भाषा चुनें / ഭാഷ തിരഞ്ഞെടുക്കുക / भाषा निवडा",
     options=list(languages.keys()),
-    index=0
+    index=list(languages.keys()).index(st.session_state.language)
 )
 
-# Sidebar navigation
-st.sidebar.title("Navigation")
-sections = ["💬 Ask AI", "🌦️ Weather Info", "📢 Schemes", "🌾 Crop Advisory", "📰 News Feed"]
+if current_lang != st.session_state.language:
+    st.session_state.language = current_lang
+    st.rerun()
 
-for section in sections:
-    if st.sidebar.button(section, key=section):
-        st.session_state.current_section = section.split(" ", 1)[1]  # Remove emoji for comparison
+# Get current language translations
+t = ui_translations[st.session_state.language]
+
+# Sidebar navigation
+st.sidebar.title(t["navigation"])
+sections = [
+    (t["ask_ai"], "Ask AI"),
+    (t["weather_info"], "Weather Info"),
+    (t["schemes"], "Schemes"),
+    (t["crop_advisory"], "Crop Advisory"),
+    (t["news_feed"], "News Feed")
+]
+
+for display_name, section_key in sections:
+    if st.sidebar.button(display_name, key=section_key):
+        st.session_state.current_section = section_key
 
 # Main content area
 if st.session_state.current_section == "Ask AI":
-    st.header("💬 AI Farming Assistant")
+    st.header(t["farming_assistant"])
     
     # Chat interface
-    st.subheader("Ask your farming questions")
+    st.subheader(t["ask_questions"])
     
     # Display chat history
     for chat in st.session_state.chat_history:
@@ -97,11 +191,11 @@ if st.session_state.current_section == "Ask AI":
     }
     
     # Voice input section
-    st.subheader("🎤 Voice Input")
-    audio_file = st.file_uploader("Upload audio file (WAV format)", type=['wav'], key="audio_upload")
+    st.subheader(t["voice_input"])
+    audio_file = st.file_uploader(t["upload_audio"], type=['wav'], key="audio_upload")
     
     if audio_file is not None:
-        if st.button("🎤 Process Voice Input"):
+        if st.button(t["process_voice"]):
             with st.spinner("Processing voice input..."):
                 try:
                     with tempfile.NamedTemporaryFile(delete=False, suffix='.wav') as tmp_file:
@@ -118,12 +212,12 @@ if st.session_state.current_section == "Ask AI":
     
     # Text input or use voice query
     user_query = st.text_input(
-        "Type your farming question here...", 
+        t["type_question"], 
         value=st.session_state.voice_query,
         key="chat_input"
     )
     
-    if st.button("📤 Send"):
+    if st.button(t["send"]):
         if user_query:
             with st.spinner("Getting AI response..."):
                 try:
@@ -138,13 +232,13 @@ if st.session_state.current_section == "Ask AI":
                     st.error(f"Error getting AI response: {str(e)}")
     
     # Image upload for disease detection
-    st.subheader("🔍 Crop Disease Detection")
-    uploaded_file = st.file_uploader("Upload crop image for disease analysis", type=['jpg', 'jpeg', 'png'])
+    st.subheader(t["disease_detection"])
+    uploaded_file = st.file_uploader(t["upload_image"], type=['jpg', 'jpeg', 'png'])
     
     if uploaded_file is not None:
         st.image(uploaded_file, caption="Uploaded Image", width=300)
         
-        if st.button("Analyze Disease"):
+        if st.button(t["analyze"]):
             with st.spinner("Analyzing image..."):
                 try:
                     # Save uploaded file temporarily
