@@ -1,6 +1,10 @@
 import requests
 import os
 from datetime import datetime
+from dotenv import load_dotenv
+
+# Load environment variables from .env file (if it exists)
+load_dotenv()
 
 def get_weather_data(location):
     """

@@ -1,5 +1,10 @@
 import streamlit as st
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file (if it exists)
+load_dotenv()
+
 from utils.gemini_helper import ask_gemini, analyze_image_for_disease
 from utils.weather_helper import get_weather_data
 from utils.crop_advisory import get_crop_recommendation

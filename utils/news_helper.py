@@ -2,6 +2,10 @@ import requests
 import json
 import os
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
+
+# Load environment variables from .env file (if it exists)
+load_dotenv()
 
 def get_agriculture_news():
     """
