@@ -22,5 +22,59 @@
         "description": "Inspect and clean"
       }
     ]
+  },
+  "9321285469": {
+    "name": "Hrishi Mishra",
+    "location": "Palakkad",
+    "mobile": "9321285469",
+    "password": "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
+    "registered_at": "2025-10-09T01:18:38.923141",
+    "crops": [
+      {
+        "name": "Rice (Paddy)",
+        "planting_date": "2025-10-09",
+        "area_acres": 10.5,
+        "added_at": "2025-10-09T01:19:24.551308"
+      }
+    ],
+    "reminders": []
+  },
+  "9999888882": {
+    "name": "Vivek Rathod",
+    "location": "belapur",
+    "mobile": "9999888882",
+    "password": "c2eb7898bb6771503ffee5d0c722e5b561fe480edbc30141880a1cdf1e5b1cf6",
+    "registered_at": "2025-10-09T10:19:39.342032",
+    "crops": [
+      {
+        "name": "Coconut",
+        "planting_date": "2025-10-09",
+        "area_acres": 100.0,
+        "added_at": "2025-10-09T10:20:39.708920"
+      }
+    ],
+    "reminders": []
+  },
+  "9321285468": {
+    "name": "Hrishi Mishra",
+    "location": "mumbai",
+    "mobile": "9321285468",
+    "password": "ea298b4e428a865c29c4f9a58ce7307dc94b28769e55aaf03d18ecb4cbd4f632",
+    "registered_at": "2025-10-30T14:23:15.105150",
+    "crops": [
+      {
+        "name": "Rice (Paddy)",
+        "planting_date": "2025-10-30",
+        "area_acres": 10.5,
+        "added_at": "2025-10-30T14:23:49.230305"
+      },
+      {
+        "name": "Banana",
+        "planting_date": "2025-11-25",
+        "area_acres": 25.0,
+        "added_at": "2025-10-30T14:24:11.019325"
+      }
+    ],
+    "reminders": []
   }
 }

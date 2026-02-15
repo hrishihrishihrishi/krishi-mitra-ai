@@ -38,8 +38,8 @@ if 'chat_history' not in st.session_state:
 if 'language' not in st.session_state:
     st.session_state.language = "English"
 
-if 'voice_query' not in st.session_state:
-    st.session_state.voice_query = ""
+#if 'voice_query' not in st.session_state:
+    #st.session_state.voice_query = ""
 
 if 'authenticated' not in st.session_state:
     st.session_state.authenticated = False
@@ -50,21 +50,21 @@ if 'user_mobile' not in st.session_state:
 if 'user_data' not in st.session_state:
     st.session_state.user_data = None
 
-def process_voice_input(audio_file, language_code):
-    """Process voice input and convert to text"""
-    recognizer = sr.Recognizer()
+# def process_voice_input(audio_file, language_code):
+#     """Process voice input and convert to text"""
+#     recognizer = sr.Recognizer()
     
-    try:
-        with sr.AudioFile(audio_file) as source:
-            audio_data = recognizer.record(source)
-            text = recognizer.recognize_google(audio_data, language=language_code)
-            return text
-    except sr.UnknownValueError:
-        return "Could not understand audio"
-    except sr.RequestError as e:
-        return f"Could not request results; {e}"
-    except Exception as e:
-        return f"Error: {str(e)}"
+#     try:
+#         with sr.AudioFile(audio_file) as source:
+#             audio_data = recognizer.record(source)
+#             text = recognizer.recognize_google(audio_data, language=language_code)
+#             return text
+#     except sr.UnknownValueError:
+#         return "Could not understand audio"
+#     except sr.RequestError as e:
+#         return f"Could not request results; {e}"
+#     except Exception as e:
+#         return f"Error: {str(e)}"
 
 # Header
 if st.session_state.authenticated and st.session_state.user_data:
@@ -534,38 +534,39 @@ if st.session_state.current_section == "Ask AI":
         "Marathi": "mr-IN"
     }
     
-    # Voice input section
-    st.subheader(t["voice_input"])
-    st.caption(t["record_voice"])
-    audio_bytes = audio_recorder(
-        text="",
-        recording_color="#e74c3c",
-        neutral_color="#3498db",
-        icon_name="microphone",
-        icon_size="3x",
-    )
+    # # Voice input section
+    # st.subheader(t["voice_input"])
+    # st.caption(t["record_voice"])
+    # audio_bytes = audio_recorder(
+    #     text="",
+    #     recording_color="#e74c3c",
+    #     neutral_color="#3498db",
+    #     icon_name="microphone",
+    #     icon_size="3x",
+    # )
     
-    if audio_bytes:
-        with st.spinner("Processing voice input..."):
-            try:
-                with tempfile.NamedTemporaryFile(delete=False, suffix='.wav') as tmp_file:
-                    tmp_file.write(audio_bytes)
-                    tmp_file_path = tmp_file.name
+    # if audio_bytes:
+    #     with st.spinner("Processing voice input..."):
+    #         try:
+    #             with tempfile.NamedTemporaryFile(delete=False, suffix='.wav') as tmp_file:
+    #                 tmp_file.write(audio_bytes)
+    #                 tmp_file_path = tmp_file.name
                 
-                voice_text = process_voice_input(tmp_file_path, speech_lang_codes[st.session_state.language])
-                st.session_state.voice_query = voice_text
-                st.success(f"Recognized: {voice_text}")
+    #             voice_text = process_voice_input(tmp_file_path, speech_lang_codes[st.session_state.language])
+    #             st.session_state.voice_query = voice_text
+    #             st.success(f"Recognized: {voice_text}")
                 
-                os.unlink(tmp_file_path)
-            except Exception as e:
-                st.error(f"Error processing voice: {str(e)}")
+    #             os.unlink(tmp_file_path)
+    #         except Exception as e:
+    #             st.error(f"Error processing voice: {str(e)}")
     
     # Text input or use voice query
+    voice_text_value = st.session_state.get("voice_query", "")
     user_query = st.text_input(
-        t["type_question"], 
-        value=st.session_state.voice_query,
-        key="chat_input"
-    )
+    t["type_question"],
+    value=voice_text_value,
+    key="chat_input"
+)
     
     if st.button(t["send"]):
         if user_query:
